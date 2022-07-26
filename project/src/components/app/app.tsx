@@ -8,18 +8,18 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PlayerPage from '../../pages/player-page/player-page';
 import SingInPage from '../../pages/sign-in-page/sign-in-page';
 import {
-  FilmObjectProps,
+  FilmsObjectProps
 } from '../../types/types';
 import PrivateRoute from '../private-route/private-route';
 import { AuthStatus } from '../../const';
 
-function App({filmObject}: FilmObjectProps): JSX.Element {
+function App({films}: FilmsObjectProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppPagesRoute.Main}
-          element={<MainPage filmObject={filmObject} />}
+          element={<MainPage films={films} />}
         />
         <Route
           path={AppPagesRoute.SignIn}
@@ -29,21 +29,25 @@ function App({filmObject}: FilmObjectProps): JSX.Element {
           path={AppPagesRoute.MyList}
           element={
             <PrivateRoute authStatus={AuthStatus.Auth}>
-              <MyListPage />
+              <MyListPage films={films}/>
             </PrivateRoute>
           }
         />
         <Route
           path={AppPagesRoute.Film}
-          element={<MoviePage />}
+          element={<MoviePage films={films}/>}
         />
         <Route
           path={AppPagesRoute.AddReview}
-          element={<AddReviewPage />}
+          element={
+            <PrivateRoute authStatus={AuthStatus.Auth}>
+              <AddReviewPage films={films}/>
+            </PrivateRoute>
+          }
         />
         <Route
           path={AppPagesRoute.Player}
-          element={<PlayerPage />}
+          element={<PlayerPage films={films}/>}
         />
         <Route
           path={'*'}

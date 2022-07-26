@@ -12,3 +12,5 @@ export enum AuthStatus {
     NoAuth = 'NO_AUTH',
     Unknown = 'UNKNOWN',
 }
+
+export const MAX_RATING_FILM = 10;

@@ -1,20 +1,21 @@
 import React from 'react';
-import CardFilm from '../../components/card-film/card-film';
+import { useNavigate } from 'react-router-dom';
+import ListFilms from '../../components/list-films/list-films';
 import {
-  FilmData,
-  FilmObjectProps,
+  FilmsObjectProps,
+  FilmData
 } from '../../types/types';
 
-function MainPage ({filmObject}: FilmObjectProps): JSX.Element {
+function MainPage ({films}: FilmsObjectProps): JSX.Element {
+  const navigate = useNavigate();
   // Для тестов пока нет бэка
-  const COUNT_FILMS = 20;
-  const arrayFilms: FilmData[] = [ ...new Array(COUNT_FILMS)].map((value, index) => ({ id: index + 1, title: filmObject.title, genre: filmObject.genre, year: filmObject.year}));
+  const headFilm: FilmData = films[0];
 
   return (
     <React.Fragment>
       <section className="film-card">
         <div className="film-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+          <img src={headFilm.backgroundImage} alt={headFilm.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -29,7 +30,7 @@ function MainPage ({filmObject}: FilmObjectProps): JSX.Element {
           </div>
 
           <ul className="user-block">
-            <li className="user-block__item">
+            <li className="user-block__item" onClick={()=>navigate('/mylist')}>
               <div className="user-block__avatar">
                 <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
               </div>
@@ -47,10 +48,10 @@ function MainPage ({filmObject}: FilmObjectProps): JSX.Element {
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{filmObject.title}</h2>
+              <h2 className="film-card__title">{headFilm.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{filmObject.genre}</span>
-                <span className="film-card__year">{filmObject.year}</span>
+                <span className="film-card__genre">{headFilm.genre}</span>
+                <span className="film-card__year">{headFilm.released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -110,9 +111,7 @@ function MainPage ({filmObject}: FilmObjectProps): JSX.Element {
             </li>
           </ul>
 
-          <div className="catalog__films-list">
-            {arrayFilms.map((item) => <CardFilm key={`cardFilm${item.id}`}/>)}
-          </div>
+          <ListFilms films={films} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
