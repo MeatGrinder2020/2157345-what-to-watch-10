@@ -9,7 +9,7 @@ type FilmRatingProp = {
 }
 
 function FilmRating({changeFormRating, formData}: FilmRatingProp):JSX.Element {
-  const arrayStars = [...new Array(MAX_RATING_FILM)].map((value, index) => MAX_RATING_FILM - index); //.sort((a, b) => b - a);
+  const arrayStars = [...new Array(MAX_RATING_FILM)].map((value, index) => MAX_RATING_FILM - index);
   const curentRating = Number(formData.rating);
   return (
     <div className="rating">
