@@ -2,17 +2,18 @@ import { SyntheticEvent, useState } from 'react';
 import { AddReviewObj } from '../../types/types';
 import FilmRating from '../film-rating/film-rating';
 
-function AddReviewForm():JSX.Element {
-  const initStateObj: AddReviewObj = {
-    comment: '',
-    date: '',
+const initStateObj: AddReviewObj = {
+  comment: '',
+  date: '',
+  id: 0,
+  rating: 0,
+  user: {
     id: 0,
-    rating: 0,
-    user: {
-      id: 0,
-      name: ''
-    }
-  };
+    name: ''
+  }
+};
+
+function AddReviewForm():JSX.Element {
   const [formData, setFormData] = useState(initStateObj);
   const formChangeHandler = (event: SyntheticEvent): void => {
     // Код для обновления состояния объекта формы

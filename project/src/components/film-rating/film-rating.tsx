@@ -9,12 +9,12 @@ type FilmRatingProp = {
 }
 
 function FilmRating({changeFormRating, formData}: FilmRatingProp):JSX.Element {
-  const arrayStars = [...new Array(MAX_RATING_FILM)].map((value, index) => index + 1).sort((a, b) => b - a);
-  const curentRating = formData.rating;
+  const arrayStars = [...new Array(MAX_RATING_FILM)].map((value, index) => MAX_RATING_FILM - index); //.sort((a, b) => b - a);
+  const curentRating = Number(formData.rating);
   return (
     <div className="rating">
       <div className="rating__stars">
-        {arrayStars.map((value)=>(<Star key={`star${value}`} value={value} changeFormRating={changeFormRating} checked={value.toString() === curentRating.toString()} />))}
+        {arrayStars.map((value)=>(<Star key={`star${value}`} value={value} changeFormRating={changeFormRating} checked={value === curentRating} />))}
       </div>
     </div>
   );
