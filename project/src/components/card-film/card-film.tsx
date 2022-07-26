@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FilmData } from '../../types/types';
+import VideoPlayer from '../videoplayer/videoplayer';
 
 type CardFilmProps = {
   filmData: FilmData,
@@ -9,13 +11,33 @@ type CardFilmProps = {
 function CardFilm ({filmData, setIdActiveFilm}:CardFilmProps): JSX.Element {
   const navigate = useNavigate();
   const {id, name, previewImage} = filmData;
+  const [isPlayedPreview, setIsPlayedPreview] = useState(false);
+  const [startPlay, setStartPlay] = useState(false);
+
+  useEffect(()=>{
+    let timer: NodeJS.Timeout;
+    if (startPlay) {
+      timer = setTimeout(() => {
+        setIsPlayedPreview(true);
+      }, 1000);
+    } else {
+      setIsPlayedPreview(false);
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  },[startPlay]);
   return (
     <article className="small-film-card catalog__films-card"
-      onMouseOver={() => setIdActiveFilm(id)}
+      onMouseOver={() => {
+        setIdActiveFilm(id);
+        setStartPlay(true);
+      }}
       onClick={()=>navigate(`/films/${id}`)}
+      onMouseOut={()=>{setStartPlay(false);}}
     >
       <div className="small-film-card__image">
-        <img src={previewImage} alt={name} width="280" height="175" />
+        {isPlayedPreview ? <VideoPlayer filmData={filmData}/> : <img src={previewImage} alt={name} width="280" height="175" />}
       </div>
       <h3 className="small-film-card__title">
         <Link className="small-film-card__link" to={`/films/${id}`}>{name}</Link>
