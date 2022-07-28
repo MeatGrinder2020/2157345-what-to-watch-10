@@ -1,14 +1,14 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import VideoPlayer from '../../components/videoplayer/videoplayer';
 import { FilmsObjectProps } from '../../types/types';
 
 function PlayerPage ({films}: FilmsObjectProps): JSX.Element {
   const {id} = useParams();
   const [currentFilmPlaying] = films.filter((film) => film.id.toString() === id);
-  const {posterImage, videoLink} = currentFilmPlaying;
   return(
     <div className="player">
-      <video src={videoLink} className="player__video" poster={posterImage}></video>
+      <VideoPlayer filmData={currentFilmPlaying}/>
 
       <button type="button" className="player__exit">Exit</button>
 
