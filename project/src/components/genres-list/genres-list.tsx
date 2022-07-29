@@ -1,16 +1,17 @@
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { filterFilmGenre } from '../../store/action';
-import { FilmsObjectProps } from '../../types/types';
 
-function GenresList({films}: FilmsObjectProps):JSX.Element {
-  const arrayGenresFilms = ['All genres', ...new Set(films.map((film)=>film.genre))];
-  const [activeGenre, setActiveGenre] = useState('All genres');
+type GenresListProps = {
+    genresFilms: string[]
+}
+
+function GenresList({genresFilms}: GenresListProps):JSX.Element {
+  const [activeGenre, setActiveGenre] = useState(genresFilms[0]);
   const dispatch = useAppDispatch();
-  const onClickGenreHandler = (event: SyntheticEvent) => {
-    event.preventDefault();
-    const {id} = event.target as HTMLTextAreaElement;
-    setActiveGenre(id);
+  const onClickHandler = (e:SyntheticEvent, genre: string) => {
+    e.preventDefault();
+    setActiveGenre(genre);
   };
   useEffect(()=>{
     dispatch(filterFilmGenre(activeGenre));
@@ -18,9 +19,9 @@ function GenresList({films}: FilmsObjectProps):JSX.Element {
 
   return (
     <ul className="catalog__genres-list">
-      {arrayGenresFilms.map((genre)=>(
+      {genresFilms.map((genre)=>(
         <li key={genre} className={genre !== activeGenre ? 'catalog__genres-item' : 'catalog__genres-item catalog__genres-item--active'}>
-          <a href="/" className="catalog__genres-link" onClick={onClickGenreHandler} id={genre}>{genre}</a>
+          <a href="/" className="catalog__genres-link" onClick={(e)=>onClickHandler(e, genre)}>{genre}</a>
         </li>
       ))}
     </ul>

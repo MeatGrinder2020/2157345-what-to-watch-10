@@ -11,6 +11,7 @@ import {
 function MainPage (): JSX.Element {
   const navigate = useNavigate();
   const {films, filteredFilmsGenre} = useAppSelector((state) => state);
+  const genresFilms = ['All genres', ...new Set(films.map((film)=>film.genre))];
   // Для тестов пока нет бэка
   const headFilm: FilmData = films[0];
   return (
@@ -80,7 +81,7 @@ function MainPage (): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenresList films={films}></GenresList>
+          <GenresList genresFilms={genresFilms}></GenresList>
 
           <ListFilms films={filteredFilmsGenre} />
 
