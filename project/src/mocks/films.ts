@@ -60,7 +60,7 @@ export const films: FilmData[] = [
       'Bill Murray'
     ],
     runTime: 99,
-    genre: 'Comedy',
+    genre: 'Drama',
     released: 2014,
     isFavorite: false
   },
@@ -81,7 +81,7 @@ export const films: FilmData[] = [
       'Bill Murray'
     ],
     runTime: 99,
-    genre: 'Comedy',
+    genre: 'Drama',
     released: 2014,
     isFavorite: false
   },
@@ -102,7 +102,7 @@ export const films: FilmData[] = [
       'Bill Murray'
     ],
     runTime: 99,
-    genre: 'Comedy',
+    genre: 'Triller',
     released: 2014,
     isFavorite: false
   },
@@ -144,7 +144,7 @@ export const films: FilmData[] = [
       'Bill Murray'
     ],
     runTime: 99,
-    genre: 'Comedy',
+    genre: 'Sci-Fi',
     released: 2014,
     isFavorite: false
   },
@@ -165,7 +165,7 @@ export const films: FilmData[] = [
       'Bill Murray'
     ],
     runTime: 99,
-    genre: 'Comedy',
+    genre: 'Documentary',
     released: 2014,
     isFavorite: false
   }];
