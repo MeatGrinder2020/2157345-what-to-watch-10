@@ -4,11 +4,10 @@ import GenresList from '../../components/genres-list/genres-list';
 import ListFilms from '../../components/list-films/list-films';
 import { useAppSelector } from '../../hooks';
 import {
-  //FilmsObjectProps,
   FilmData
 } from '../../types/types';
 
-function MainPage (): JSX.Element {
+function MainPage(): JSX.Element {
   const navigate = useNavigate();
   const {films, filteredFilmsGenre} = useAppSelector((state) => state);
   const genresFilms = ['All genres', ...new Set(films.map((film)=>film.genre))];
@@ -47,7 +46,7 @@ function MainPage (): JSX.Element {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+              <img src={headFilm.posterImage} alt="The Grand Budapest Hotel poster" width="218" height="327" />
             </div>
 
             <div className="film-card__desc">

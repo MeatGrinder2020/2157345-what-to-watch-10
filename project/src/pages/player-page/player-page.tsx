@@ -1,9 +1,10 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import VideoPlayer from '../../components/videoplayer/videoplayer';
-import { FilmsObjectProps } from '../../types/types';
+import { useAppSelector } from '../../hooks';
 
-function PlayerPage ({films}: FilmsObjectProps): JSX.Element {
+function PlayerPage (): JSX.Element {
+  const {films} = useAppSelector((state) => state);
   const {id} = useParams();
   const [currentFilmPlaying] = films.filter((film) => film.id.toString() === id);
   return(

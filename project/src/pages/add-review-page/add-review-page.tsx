@@ -1,9 +1,10 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import AddReviewForm from '../../components/add-review-form/add-review-form';
-import { FilmsObjectProps } from '../../types/types';
+import { useAppSelector } from '../../hooks';
 
-function AddReviewPage ({films}: FilmsObjectProps): JSX.Element {
+function AddReviewPage (): JSX.Element {
+  const {films} = useAppSelector((state) => state);
   const {id} = useParams();
   const [currentFilmReview] = films.filter((film) => film.id.toString() === id);
   const {name, backgroundImage} = currentFilmReview;

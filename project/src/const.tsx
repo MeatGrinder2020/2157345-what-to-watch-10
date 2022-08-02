@@ -14,3 +14,7 @@ export enum AuthStatus {
 }
 
 export const MAX_RATING_FILM = 10;
+
+export enum APIRoute {
+    Films = '/films',
+}
