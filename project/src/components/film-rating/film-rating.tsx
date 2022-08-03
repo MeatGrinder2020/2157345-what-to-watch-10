@@ -1,4 +1,4 @@
-import React, { SyntheticEvent } from 'react';
+import React, { memo, SyntheticEvent } from 'react';
 import Star from './star';
 import { MAX_RATING_FILM } from '../../const';
 import { AddReviewObj } from '../../types/types';
@@ -8,8 +8,9 @@ type FilmRatingProp = {
     changeFormRating: (event: SyntheticEvent)=>void
 }
 
+const arrayStars = [...new Array(MAX_RATING_FILM)].map((value, index) => MAX_RATING_FILM - index);
+
 function FilmRating({changeFormRating, formData}: FilmRatingProp):JSX.Element {
-  const arrayStars = [...new Array(MAX_RATING_FILM)].map((value, index) => MAX_RATING_FILM - index);
   const curentRating = Number(formData.rating);
   return (
     <div className="rating">
@@ -20,4 +21,4 @@ function FilmRating({changeFormRating, formData}: FilmRatingProp):JSX.Element {
   );
 }
 
-export default FilmRating;
+export default memo(FilmRating);

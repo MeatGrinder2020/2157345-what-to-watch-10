@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useCallback, useState } from 'react';
 import { AddReviewObj } from '../../types/types';
 import FilmRating from '../film-rating/film-rating';
 
@@ -15,11 +15,12 @@ const initStateObj: AddReviewObj = {
 
 function AddReviewForm():JSX.Element {
   const [formData, setFormData] = useState(initStateObj);
-  const formChangeHandler = (event: SyntheticEvent): void => {
+  const formChangeHandler = useCallback((event: SyntheticEvent): void => {
     // Код для обновления состояния объекта формы
     const {name, value} = event.target as HTMLTextAreaElement;
     setFormData({...formData, [name]: value});
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
 
   return(
     <div className="add-review">
@@ -30,7 +31,6 @@ function AddReviewForm():JSX.Element {
           <div className="add-review__submit">
             <button className="add-review__btn" type="submit">Post</button>
           </div>
-
         </div>
       </form>
     </div>
