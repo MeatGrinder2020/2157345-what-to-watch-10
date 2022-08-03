@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { FilmsObjectProps } from '../../types/types';
+import { useAppSelector } from '../../hooks';
 
-function MoviePage({films}:FilmsObjectProps): JSX.Element {
+function MoviePage(): JSX.Element {
+  const {films} = useAppSelector((state) => state);
   const {id} = useParams();
   const [currentFilm] = films.filter((film) => film.id.toString() === id);
   const {name, backgroundImage, genre, released, posterImage, rating, scoresCount} = currentFilm;
