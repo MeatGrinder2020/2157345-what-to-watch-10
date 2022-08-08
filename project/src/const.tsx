@@ -18,3 +18,5 @@ export const MAX_RATING_FILM = 10;
 export enum APIRoute {
     Films = '/films',
 }
+
+export const TABS = ['Overview', 'Details', 'Reviews'];

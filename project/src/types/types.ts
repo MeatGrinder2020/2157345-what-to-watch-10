@@ -46,4 +46,8 @@ type AddReviewObj = {
     }
 }
 
-export type {FilmData, FilmsObjectProps, PrivateRouteProps, Films, FilmDataProps, AddReviewObj};
+type MovieTabsProps = {
+  currentFilm: FilmData
+}
+
+export type {FilmData, FilmsObjectProps, PrivateRouteProps, Films, FilmDataProps, AddReviewObj, MovieTabsProps};
