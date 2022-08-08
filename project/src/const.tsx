@@ -17,4 +17,6 @@ export const MAX_RATING_FILM = 10;
 
 export enum APIRoute {
     Films = '/films',
+    Login = '/login',
+    Logout = '/logout',
 }

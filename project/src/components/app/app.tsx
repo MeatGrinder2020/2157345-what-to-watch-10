@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { AppPagesRoute } from '../../const';
 import AddReviewPage from '../../pages/add-review-page/add-review-page';
 import MainPage from '../../pages/main-page/main-page';
@@ -8,17 +8,19 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PlayerPage from '../../pages/player-page/player-page';
 import SingInPage from '../../pages/sign-in-page/sign-in-page';
 import PrivateRoute from '../private-route/private-route';
-import { AuthStatus } from '../../const';
 import { useAppSelector } from '../../hooks';
 import Loader from '../loader/loader';
+import { isCheckedAuth } from '../../main';
+import browserHistory from '../../browser-history';
+import HistoryRouter from '../history-router/history-router';
 
 function App(): JSX.Element {
-  const {films, isDataLoading} = useAppSelector((state) => state);
-  if (isDataLoading || films.length === 0) {
+  const {films, isDataLoading, authorizationStatus} = useAppSelector((state) => state);
+  if (isCheckedAuth(authorizationStatus) || isDataLoading || films.length === 0) {
     return <Loader />;
   }
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           path={AppPagesRoute.Main}
@@ -31,7 +33,7 @@ function App(): JSX.Element {
         <Route
           path={AppPagesRoute.MyList}
           element={
-            <PrivateRoute authStatus={AuthStatus.Auth}>
+            <PrivateRoute>
               <MyListPage />
             </PrivateRoute>
           }
@@ -43,7 +45,7 @@ function App(): JSX.Element {
         <Route
           path={AppPagesRoute.AddReview}
           element={
-            <PrivateRoute authStatus={AuthStatus.Auth}>
+            <PrivateRoute>
               <AddReviewPage />
             </PrivateRoute>
           }
@@ -57,7 +59,7 @@ function App(): JSX.Element {
           element={<NotFoundPage />}
         />
       </Routes>
-    </BrowserRouter> );
+    </HistoryRouter> );
 }
 
 export default App;

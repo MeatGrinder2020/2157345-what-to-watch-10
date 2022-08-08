@@ -1,5 +1,3 @@
-import { AuthStatus } from '../const';
-
 type FilmData = {
   id: number
   name: string
@@ -30,11 +28,6 @@ type FilmDataProps = {
   filmData: FilmData,
 };
 
-type PrivateRouteProps = {
-  authStatus: AuthStatus;
-  children: JSX.Element;
-}
-
 type AddReviewObj = {
     comment: string
     date: string
@@ -46,4 +39,4 @@ type AddReviewObj = {
     }
 }
 
-export type {FilmData, FilmsObjectProps, PrivateRouteProps, Films, FilmDataProps, AddReviewObj};
+export type {FilmData, FilmsObjectProps, Films, FilmDataProps, AddReviewObj};
