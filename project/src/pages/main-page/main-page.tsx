@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import Avatar from '../../components/avatar/avatar';
 import GenresList from '../../components/genres-list/genres-list';
 import ListFilms from '../../components/list-films/list-films';
 import { useAppSelector } from '../../hooks';
@@ -8,7 +8,6 @@ import {
 } from '../../types/types';
 
 function MainPage(): JSX.Element {
-  const navigate = useNavigate();
   const {films, filteredFilmsGenre} = useAppSelector((state) => state);
   const genresFilms = ['All genres', ...new Set(films.map((film)=>film.genre))];
   // Для тестов пока нет бэка
@@ -31,16 +30,7 @@ function MainPage(): JSX.Element {
             </a>
           </div>
 
-          <ul className="user-block">
-            <li className="user-block__item" onClick={()=>navigate('/mylist')}>
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a className="user-block__link" href="/">Sign out</a>
-            </li>
-          </ul>
+          <Avatar />
         </header>
 
         <div className="film-card__wrap">
