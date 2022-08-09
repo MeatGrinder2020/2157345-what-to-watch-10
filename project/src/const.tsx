@@ -20,3 +20,5 @@ export enum APIRoute {
     Login = '/login',
     Logout = '/logout',
 }
+
+export const TABS = ['Overview', 'Details', 'Reviews'];
