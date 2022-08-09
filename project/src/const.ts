@@ -23,3 +23,5 @@ export enum APIRoute {
 
 
 export const HOW_MATCH_SHOW_FILMS = 8;
+
+export const TABS = ['Overview', 'Details', 'Reviews'];
