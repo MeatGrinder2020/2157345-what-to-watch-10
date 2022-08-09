@@ -11,8 +11,6 @@ type TabsProps = {
 }
 
 function Tabs({currentFilm}:TabsProps):JSX.Element{
-  // eslint-disable-next-line no-console
-  console.log('currentFilm', currentFilm);
   const [activeTab, setActiveTab] = useState(TABS[0]);
   return(
     <div className="film-card__desc">
