@@ -20,3 +20,6 @@ export enum APIRoute {
     Login = '/login',
     Logout = '/logout',
 }
+
+
+export const HOW_MATCH_SHOW_FILMS = 8;
