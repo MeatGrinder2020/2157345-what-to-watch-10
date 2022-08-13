@@ -21,4 +21,7 @@ export enum APIRoute {
     Logout = '/logout',
 }
 
+
+export const HOW_MATCH_SHOW_FILMS = 8;
+
 export const TABS = ['Overview', 'Details', 'Reviews'];
