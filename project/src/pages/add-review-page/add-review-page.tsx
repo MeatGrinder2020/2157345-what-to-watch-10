@@ -1,13 +1,11 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
 import AddReviewForm from '../../components/add-review-form/add-review-form';
+import Avatar from '../../components/avatar/avatar';
 import { useAppSelector } from '../../hooks';
 
 function AddReviewPage (): JSX.Element {
-  const {films} = useAppSelector((state) => state);
-  const {id} = useParams();
-  const [currentFilmReview] = films.filter((film) => film.id.toString() === id);
-  const {name, backgroundImage} = currentFilmReview;
+  const {currentFilm} = useAppSelector((state) => state);
+  const {name, backgroundImage} = currentFilm;
   return(
     <section className="film-card film-card--full">
       <div className="film-card__header">
@@ -37,16 +35,7 @@ function AddReviewPage (): JSX.Element {
             </ul>
           </nav>
 
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a className="user-block__link" href="/">Sign out</a>
-            </li>
-          </ul>
+          <Avatar />
         </header>
 
         <div className="film-card__poster film-card__poster--small">
