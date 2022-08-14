@@ -49,3 +49,5 @@ export const INIT_FILM = {
   released: 0,
   isFavorite: false
 } as FilmData;
+
+export const HOW_MATCH_SHOW_FILMS = 8;

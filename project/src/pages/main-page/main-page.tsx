@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '../../components/avatar/avatar';
 import GenresList from '../../components/genres-list/genres-list';
 import ListFilms from '../../components/list-films/list-films';
+import ShowMore from '../../components/show-more/show-more';
+import { HOW_MATCH_SHOW_FILMS } from '../../const';
 import { useAppSelector } from '../../hooks';
 
 function MainPage(): JSX.Element {
   const {films, filteredFilmsGenre, promoFilm} = useAppSelector((state) => state);
   const genresFilms = ['All genres', ...new Set(films.map((film)=>film.genre))];
+  const [incForShow, setIncForShow] = useState(HOW_MATCH_SHOW_FILMS);
+  const filmsForShow = filteredFilmsGenre.slice(0, incForShow);
   return (
     <React.Fragment>
       <section className="film-card">
@@ -24,7 +28,6 @@ function MainPage(): JSX.Element {
               <span className="logo__letter logo__letter--3">W</span>
             </a>
           </div>
-
           <Avatar />
         </header>
 
@@ -64,14 +67,9 @@ function MainPage(): JSX.Element {
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-
           <GenresList genresFilms={genresFilms}></GenresList>
-
-          <ListFilms films={filteredFilmsGenre} />
-
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          <ListFilms films={filmsForShow} />
+          {(incForShow <= filmsForShow.length) && <ShowMore incForShow={incForShow} showMoreFilms={setIncForShow}/>}
         </section>
 
         <footer className="page-footer">
