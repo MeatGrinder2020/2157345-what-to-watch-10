@@ -5,22 +5,17 @@ import ListFilms from '../../components/list-films/list-films';
 import ShowMore from '../../components/show-more/show-more';
 import { HOW_MATCH_SHOW_FILMS } from '../../const';
 import { useAppSelector } from '../../hooks';
-import {
-  FilmData
-} from '../../types/types';
 
 function MainPage(): JSX.Element {
-  const {films, filteredFilmsGenre} = useAppSelector((state) => state);
+  const {films, filteredFilmsGenre, promoFilm} = useAppSelector((state) => state);
   const genresFilms = ['All genres', ...new Set(films.map((film)=>film.genre))];
   const [incForShow, setIncForShow] = useState(HOW_MATCH_SHOW_FILMS);
   const filmsForShow = filteredFilmsGenre.slice(0, incForShow);
-  // Для тестов пока нет бэка
-  const headFilm: FilmData = films[0];
   return (
     <React.Fragment>
       <section className="film-card">
         <div className="film-card__bg">
-          <img src={headFilm.backgroundImage} alt={headFilm.name} />
+          <img src={promoFilm.backgroundImage} alt={promoFilm.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -39,14 +34,14 @@ function MainPage(): JSX.Element {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src={headFilm.posterImage} alt="The Grand Budapest Hotel poster" width="218" height="327" />
+              <img src={promoFilm.posterImage} alt="The Grand Budapest Hotel poster" width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{headFilm.name}</h2>
+              <h2 className="film-card__title">{promoFilm.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{headFilm.genre}</span>
-                <span className="film-card__year">{headFilm.released}</span>
+                <span className="film-card__genre">{promoFilm.genre}</span>
+                <span className="film-card__year">{promoFilm.released}</span>
               </p>
 
               <div className="film-card__buttons">

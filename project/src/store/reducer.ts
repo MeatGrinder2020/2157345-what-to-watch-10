@@ -1,13 +1,18 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { AuthStatus } from '../const';
-import { Films } from '../types/types';
-import { filterFilmGenre, loadFilms, requireAuth, setDataLoadedStatus } from './action';
+import { AuthStatus, INIT_FILM } from '../const';
+import { Films, FilmData, Comments } from '../types/types';
+import { filterFilmGenre, getCommentsFilm, getFilmData, getLikeThisFilm, getPromoFilm, loadFilms, requireAuth, setDataLoadedStatus } from './action';
 
 type InitialState = {
     films: Films,
     filteredFilmsGenre: Films,
     isDataLoading: boolean,
-    authorizationStatus: AuthStatus
+    authorizationStatus: AuthStatus,
+    currentFilm: FilmData,
+    likeThisFilms: Films,
+    promoFilm: FilmData,
+    currentFilmComments: Comments
+
 }
 
 const initialState: InitialState = {
@@ -15,6 +20,10 @@ const initialState: InitialState = {
   filteredFilmsGenre: [],
   isDataLoading: false,
   authorizationStatus: AuthStatus.Unknown,
+  currentFilm: INIT_FILM,
+  likeThisFilms: [],
+  promoFilm: INIT_FILM,
+  currentFilmComments: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -33,6 +42,18 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(requireAuth, (state, action) => {
       state.authorizationStatus = action.payload;
+    })
+    .addCase(getFilmData, (state, action) => {
+      state.currentFilm = action.payload;
+    })
+    .addCase(getLikeThisFilm, (state, action) => {
+      state.likeThisFilms = action.payload;
+    })
+    .addCase(getPromoFilm, (state, action) => {
+      state.promoFilm = action.payload;
+    })
+    .addCase(getCommentsFilm, (state, action) => {
+      state.currentFilmComments = action.payload;
     });
 });
 

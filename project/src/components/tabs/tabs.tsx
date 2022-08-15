@@ -23,7 +23,7 @@ function Tabs({currentFilm}:TabsProps):JSX.Element{
       </nav>
       {activeTab === TABS[0] && <MovieOverview currentFilm={currentFilm}/>}
       {activeTab === TABS[1] && <MovieDetails currentFilm={currentFilm}/>}
-      {activeTab === TABS[2] && <MovieReviews currentFilm={currentFilm}/>}
+      {activeTab === TABS[2] && <MovieReviews />}
     </div>);
 }
 

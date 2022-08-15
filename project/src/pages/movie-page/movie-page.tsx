@@ -1,14 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import Avatar from '../../components/avatar/avatar';
+import Loader from '../../components/loader/loader';
 import MoreLikeThis from '../../components/more-like-this/more-like-this';
 import Tabs from '../../components/tabs/tabs';
-import { useAppSelector } from '../../hooks';
+import { AuthStatus } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchCommentsFilm, fetchFilmData, fetchLikeThisFilms } from '../../store/api-actions';
 
 function MoviePage(): JSX.Element {
-  const {films} = useAppSelector((state) => state);
+  const {currentFilm, isDataLoading, authorizationStatus, likeThisFilms} = useAppSelector((state) => state);
   const {id} = useParams();
-  const [currentFilm] = films.filter((film) => film.id.toString() === id);
-  const {name, backgroundImage, genre, released, posterImage} = currentFilm;
+  const { name, backgroundImage, genre, released, posterImage} = currentFilm;
+  const dispatch = useAppDispatch();
+
+  useEffect(()=>{
+    dispatch(fetchFilmData(Number(id)));
+    dispatch(fetchCommentsFilm(Number(id)));
+    dispatch(fetchLikeThisFilms(Number(id)));
+  },[id, dispatch]);
+
+  if (isDataLoading || currentFilm.id === 0 || likeThisFilms.length === 0 ) {
+    return <Loader />;
+  }
   return(
     <React.Fragment>
       <section className="film-card film-card--full">
@@ -28,16 +42,7 @@ function MoviePage(): JSX.Element {
               </a>
             </div>
 
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                </div>
-              </li>
-              <li className="user-block__item">
-                <a className="user-block__link" href="/">Sign out</a>
-              </li>
-            </ul>
+            <Avatar />
           </header>
 
           <div className="film-card__wrap">
@@ -62,7 +67,7 @@ function MoviePage(): JSX.Element {
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </button>
-                <Link to={`/films/${id}/review`} className="btn film-card__button">Add review</Link>
+                {(authorizationStatus === AuthStatus.Auth) && <Link to={`/films/${id}/review`} className="btn film-card__button">Add review</Link>}
               </div>
             </div>
           </div>
@@ -82,7 +87,7 @@ function MoviePage(): JSX.Element {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <MoreLikeThis currentFilm={currentFilm}/>
+          <MoreLikeThis />
         </section>
 
         <footer className="page-footer">
