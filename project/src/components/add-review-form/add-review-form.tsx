@@ -1,45 +1,35 @@
-import { SyntheticEvent, useEffect, useCallback, useState } from 'react';
+import { SyntheticEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { addCommentFilm } from '../../store/api-actions';
+import { getFilmsData } from '../../store/films-data/selectors';
 import { AddReviewObj } from '../../types/types';
 import FilmRating from '../film-rating/film-rating';
 
 const initStateObj: AddReviewObj = {
   comment: '',
-  date: '',
-  id: 0,
   rating: 0,
-  user: {
-    id: 0,
-    name: ''
-  }
 };
 
 function AddReviewForm():JSX.Element {
   const dispatch = useAppDispatch();
-  const {currentFilm} = useAppSelector((state) => state);
+  const { currentFilm } = useAppSelector(getFilmsData);
   const [formData, setFormData] = useState(initStateObj);
-  const formChangeHandler = useCallback((event: SyntheticEvent): void => {
+  const formChangeHandler = (event: SyntheticEvent): void => {
     // Код для обновления состояния объекта формы
     const {name, value} = event.target as HTMLTextAreaElement;
     setFormData({...formData, [name]: value});
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[]);
+  };
 
   const onSubmitHandler = (event: SyntheticEvent):void => {
     event.preventDefault();
-    const {comment, rating, id} = formData;
+    const {comment, rating} = formData;
     const rewiew = {
-      id,
+      id: currentFilm.id,
       comment,
       rating,
     };
     dispatch(addCommentFilm(rewiew));
   };
-
-  useEffect(()=>{
-    setFormData((formDataPrev)=>({...formDataPrev, id: currentFilm.id}));
-  },[currentFilm]);
 
   return(
     <div className="add-review">

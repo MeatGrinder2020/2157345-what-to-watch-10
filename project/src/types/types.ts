@@ -20,7 +20,7 @@ type FilmData = {
   isFavorite: boolean
   };
 
-type Films = FilmData[];
+type Films = FilmData[] | [];
 
 type FilmsObjectProps = {
   films: Films,
@@ -36,14 +36,8 @@ type PrivateRouteProps = {
 }
 
 type AddReviewObj = {
-    comment: string
-    date: string
-    id: number
-    rating: number
-    user: {
-    id: number
-    name: string
-    }
+    comment: string;
+    rating: number;
 }
 
 type MovieTabsProps = {
@@ -61,7 +55,7 @@ type CommentData = {
   }
 };
 
-type Comments = CommentData[] | []
+type Comments = CommentData[]
 
 type CommentAdd = {
   id: number

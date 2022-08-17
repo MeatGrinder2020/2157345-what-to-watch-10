@@ -1,4 +1,4 @@
-import React, { memo, SyntheticEvent } from 'react';
+import React, { SyntheticEvent } from 'react';
 import Star from './star';
 import { MAX_RATING_FILM } from '../../const';
 import { AddReviewObj } from '../../types/types';
@@ -21,4 +21,4 @@ function FilmRating({changeFormRating, formData}: FilmRatingProp):JSX.Element {
   );
 }
 
-export default memo(FilmRating);
+export default FilmRating;
