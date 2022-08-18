@@ -1,9 +1,10 @@
 import React from 'react';
 import ListFilms from '../../components/list-films/list-films';
 import { useAppSelector } from '../../hooks';
+import { getFilmsData } from '../../store/films-data/selectors';
 
 function MyListPage (): JSX.Element {
-  const {films} = useAppSelector((state) => state);
+  const {films} = useAppSelector(getFilmsData);
   return(
     <div className="user-page">
       <header className="page-header user-page__head">

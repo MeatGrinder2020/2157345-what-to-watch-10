@@ -1,23 +1,18 @@
-import { SyntheticEvent, useEffect, useState } from 'react';
+import { SyntheticEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { addCommentFilm } from '../../store/api-actions';
+import { getFilmsData } from '../../store/films-data/selectors';
 import { AddReviewObj } from '../../types/types';
 import FilmRating from '../film-rating/film-rating';
 
 const initStateObj: AddReviewObj = {
   comment: '',
-  date: '',
-  id: 0,
   rating: 0,
-  user: {
-    id: 0,
-    name: ''
-  }
 };
 
 function AddReviewForm():JSX.Element {
   const dispatch = useAppDispatch();
-  const {currentFilm} = useAppSelector((state) => state);
+  const { currentFilm } = useAppSelector(getFilmsData);
   const [formData, setFormData] = useState(initStateObj);
   const formChangeHandler = (event: SyntheticEvent): void => {
     // Код для обновления состояния объекта формы
@@ -27,18 +22,14 @@ function AddReviewForm():JSX.Element {
 
   const onSubmitHandler = (event: SyntheticEvent):void => {
     event.preventDefault();
-    const {comment, rating, id} = formData;
+    const {comment, rating} = formData;
     const rewiew = {
-      id,
+      id: currentFilm.id,
       comment,
       rating,
     };
     dispatch(addCommentFilm(rewiew));
   };
-
-  useEffect(()=>{
-    setFormData((formDataPrev)=>({...formDataPrev, id: currentFilm.id}));
-  },[currentFilm]);
 
   return(
     <div className="add-review">
@@ -49,7 +40,6 @@ function AddReviewForm():JSX.Element {
           <div className="add-review__submit">
             <button className="add-review__btn" type="submit">Post</button>
           </div>
-
         </div>
       </form>
     </div>

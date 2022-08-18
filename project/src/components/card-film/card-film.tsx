@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FilmData } from '../../types/types';
 import VideoPlayer from '../videoplayer/videoplayer';
@@ -53,4 +53,4 @@ function CardFilm ({filmData, setIdActiveFilm}:CardFilmProps): JSX.Element {
   );
 }
 
-export default CardFilm;
+export default memo(CardFilm);

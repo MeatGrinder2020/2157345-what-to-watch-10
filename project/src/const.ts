@@ -51,3 +51,11 @@ export const INIT_FILM = {
 } as FilmData;
 
 export const HOW_MATCH_SHOW_FILMS = 8;
+
+
+export enum NameSpace {
+    Films = 'FILMS',
+    Comments = 'COMMENTS',
+    User = 'USER',
+}
+

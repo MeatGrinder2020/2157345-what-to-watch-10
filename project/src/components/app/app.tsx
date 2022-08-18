@@ -13,10 +13,13 @@ import Loader from '../loader/loader';
 import { isCheckedAuth } from '../../main';
 import browserHistory from '../../browser-history';
 import HistoryRouter from '../history-router/history-router';
+import { getFilmsData } from '../../store/films-data/selectors';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 function App(): JSX.Element {
-  const {films, isDataLoading, authorizationStatus} = useAppSelector((state) => state);
-  if (isCheckedAuth(authorizationStatus) || isDataLoading || films.length === 0) {
+  const {films, isDataLoading, isDataPromoFilmLoading } = useAppSelector(getFilmsData);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  if (isCheckedAuth(authorizationStatus) || isDataLoading || films.length === 0 || isDataPromoFilmLoading) {
     return <Loader />;
   }
   return (

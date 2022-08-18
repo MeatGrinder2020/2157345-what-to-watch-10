@@ -2,9 +2,10 @@ import React from 'react';
 import AddReviewForm from '../../components/add-review-form/add-review-form';
 import Avatar from '../../components/avatar/avatar';
 import { useAppSelector } from '../../hooks';
+import { getFilmsData } from '../../store/films-data/selectors';
 
 function AddReviewPage (): JSX.Element {
-  const {currentFilm} = useAppSelector((state) => state);
+  const {currentFilm} = useAppSelector(getFilmsData);
   const {name, backgroundImage} = currentFilm;
   return(
     <section className="film-card film-card--full">

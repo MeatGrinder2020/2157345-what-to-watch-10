@@ -8,8 +8,9 @@ type FilmRatingProp = {
     changeFormRating: (event: SyntheticEvent)=>void
 }
 
+const arrayStars = [...new Array(MAX_RATING_FILM)].map((value, index) => MAX_RATING_FILM - index);
+
 function FilmRating({changeFormRating, formData}: FilmRatingProp):JSX.Element {
-  const arrayStars = [...new Array(MAX_RATING_FILM)].map((value, index) => MAX_RATING_FILM - index);
   const curentRating = Number(formData.rating);
   return (
     <div className="rating">

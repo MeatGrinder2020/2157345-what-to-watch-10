@@ -1,4 +1,4 @@
-import React, { SyntheticEvent } from 'react';
+import React, { memo, SyntheticEvent } from 'react';
 
 type StarProp ={
   value: number,
@@ -14,4 +14,4 @@ function Star({value, changeFormRating, checked}: StarProp):JSX.Element {
     </React.Fragment>
   );
 }
-export default Star;
+export default memo(Star);

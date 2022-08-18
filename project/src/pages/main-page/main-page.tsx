@@ -5,9 +5,10 @@ import ListFilms from '../../components/list-films/list-films';
 import ShowMore from '../../components/show-more/show-more';
 import { HOW_MATCH_SHOW_FILMS } from '../../const';
 import { useAppSelector } from '../../hooks';
+import { getFilmsData } from '../../store/films-data/selectors';
 
 function MainPage(): JSX.Element {
-  const {films, filteredFilmsGenre, promoFilm} = useAppSelector((state) => state);
+  const {films, filteredFilmsGenre, promoFilm} = useAppSelector(getFilmsData);
   const genresFilms = ['All genres', ...new Set(films.map((film)=>film.genre))];
   const [incForShow, setIncForShow] = useState(HOW_MATCH_SHOW_FILMS);
   const filmsForShow = filteredFilmsGenre.slice(0, incForShow);
