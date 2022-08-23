@@ -25,6 +25,7 @@ export enum APIRoute {
     Logout = '/logout',
     Promo ='/promo',
     Comments ='/comments',
+    MyList = '/favorite',
 }
 
 export const TABS = ['Overview', 'Details', 'Reviews'];
@@ -57,5 +58,8 @@ export enum NameSpace {
     Films = 'FILMS',
     Comments = 'COMMENTS',
     User = 'USER',
+    FavoriteFilms = 'FAVORITE_FILMS'
 }
+
+export const GUEST_AVATAR_URL = 'img/guest.jpg';
 

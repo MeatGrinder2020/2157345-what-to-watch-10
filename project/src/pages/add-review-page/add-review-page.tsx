@@ -1,12 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import AddReviewForm from '../../components/add-review-form/add-review-form';
 import Avatar from '../../components/avatar/avatar';
+import Logo from '../../components/logo/logo';
+import { AppPagesRoute } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { getFilmsData } from '../../store/films-data/selectors';
 
 function AddReviewPage (): JSX.Element {
   const {currentFilm} = useAppSelector(getFilmsData);
-  const {name, backgroundImage} = currentFilm;
+  const {name, backgroundImage, posterImage, id} = currentFilm;
   return(
     <section className="film-card film-card--full">
       <div className="film-card__header">
@@ -17,21 +20,15 @@ function AddReviewPage (): JSX.Element {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header">
-          <div className="logo">
-            <a href="main.html" className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
+          <Logo />
 
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <a href="film-page.html" className="breadcrumbs__link">{name}</a>
+                <Link to={`${AppPagesRoute.ReturnFilmPage}/${id}`} className="breadcrumbs__link">{name}</Link>
               </li>
               <li className="breadcrumbs__item">
-                <a className="breadcrumbs__link" href="/">Add review</a>
+                <Link className="breadcrumbs__link" to={`${AppPagesRoute.ReturnFilmPage}/${id}/review`}>Add review</Link>
               </li>
             </ul>
           </nav>
@@ -40,7 +37,7 @@ function AddReviewPage (): JSX.Element {
         </header>
 
         <div className="film-card__poster film-card__poster--small">
-          <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+          <img src={posterImage} alt={name} width="218" height="327" />
         </div>
       </div>
 

@@ -3,8 +3,9 @@ import { AxiosInstance } from 'axios';
 import { APIRoute, AppPagesRoute } from '../const';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
+import { AddInMyList, AnswerAddInMyList } from '../types/my-list-data';
 import { AppDispatch, State } from '../types/state';
-import { AnswerSendComments, CommentAdd, Comments, FilmData, Films } from '../types/types';
+import { AnswerSendComments, AvatarUrl, CommentAdd, Comments, FilmData, Films } from '../types/types';
 import { UserData } from '../types/user-data';
 import { redirectToRoute } from './action';
 
@@ -31,16 +32,17 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
     },
   );
 
-export const loginAction = createAsyncThunk<void, AuthData, {
+export const loginAction = createAsyncThunk<AvatarUrl, AuthData, {
     dispatch: AppDispatch,
     state: State,
     extra: AxiosInstance
   }>(
     'user/login',
     async ({login: email, password}, {dispatch, extra: api}) => {
-      const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
+      const {data:{token, avatarUrl}} = await api.post<UserData>(APIRoute.Login, {email, password});
       saveToken(token);
       dispatch(redirectToRoute(AppPagesRoute.Main));
+      return avatarUrl;
     },
   );
 
@@ -113,5 +115,29 @@ export const addCommentFilm = createAsyncThunk<void, CommentAdd, {
     async ({id, comment, rating}, {dispatch, extra: api}) => {
       await api.post<AnswerSendComments>(`${APIRoute.Comments}/${id}`, {comment, rating});
       dispatch(redirectToRoute(`${AppPagesRoute.ReturnFilmPage}/${id}`));
+    },
+  );
+
+export const fetchFavoriteFilms = createAsyncThunk<Films, undefined, {
+    dispatch: AppDispatch,
+    state: State,
+    extra: AxiosInstance
+  }>(
+    'favoriteFilms/fetchFavoriteFilms',
+    async (_arg, {dispatch, extra: api}) => {
+      const {data} = await api.get<Films>(`${APIRoute.MyList}`);
+      return data;
+    },
+  );
+
+export const changeMyListFilm = createAsyncThunk<void, AddInMyList, {
+    dispatch: AppDispatch,
+    state: State,
+    extra: AxiosInstance
+  }>(
+    'favoriteFilms/changeMyListFilm',
+    async ({id, status}, {dispatch, extra: api}) => {
+      await api.post<AnswerAddInMyList>(`${APIRoute.MyList}/${id}/${status}`);
+      dispatch(fetchFavoriteFilms());
     },
   );

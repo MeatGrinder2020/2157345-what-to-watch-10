@@ -7,7 +7,8 @@ export type State = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 export type UserProcess = {
-    authorizationStatus: AuthStatus
+    authorizationStatus: AuthStatus,
+    avatarUrl: string,
 };
 
 export type FilmsData = {
@@ -25,4 +26,9 @@ export type FilmsData = {
 export type CommentsData = {
     currentFilmComments: Comments,
     isDataCommentsLoading: boolean,
+}
+
+export type FavoriteFilms = {
+    favoriteFilmsList: Films,
+    isLoadingFavoriteFilms: boolean
 }

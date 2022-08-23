@@ -15,11 +15,15 @@ import browserHistory from '../../browser-history';
 import HistoryRouter from '../history-router/history-router';
 import { getFilmsData } from '../../store/films-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getFavoriteFilmsData } from '../../store/favorite-films/selectors';
 
 function App(): JSX.Element {
   const {films, isDataLoading, isDataPromoFilmLoading } = useAppSelector(getFilmsData);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  if (isCheckedAuth(authorizationStatus) || isDataLoading || films.length === 0 || isDataPromoFilmLoading) {
+  if (isCheckedAuth(authorizationStatus)
+    || isDataLoading
+    || films.length === 0
+    || isDataPromoFilmLoading) {
     return <Loader />;
   }
   return (
