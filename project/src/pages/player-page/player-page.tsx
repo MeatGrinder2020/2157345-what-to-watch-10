@@ -1,38 +1,88 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import VideoPlayer from '../../components/videoplayer/videoplayer';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
+import { getRemindedTimeFilm } from '../../main';
 import { getFilmsData } from '../../store/films-data/selectors';
+import PlayerButtonPause from './player-button-pause';
+import PlayerButtonPlay from './player-button-play';
 
-function PlayerPage (): JSX.Element {
+const getCurrentProgress = (currentTime: number, duration: number):string => `${Math.floor(currentTime * 100 / duration)}`;
+
+function PlayerPage(): JSX.Element {
+  const navigate = useNavigate();
   const {films} = useAppSelector(getFilmsData);
   const {id} = useParams();
   const [currentFilmPlaying] = films.filter((film) => film.id.toString() === id);
-  return(
-    <div className="player">
-      <VideoPlayer filmData={currentFilmPlaying}/>
+  const {videoLink, name, backgroundImage, runTime} = currentFilmPlaying;
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const video = useRef<HTMLVideoElement>(null!);
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const progressElem = useRef<HTMLProgressElement>(null!);
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const videoContainer = useRef<HTMLDivElement>(null!);
+  const [isPlayFilm, setIsPlayFilm] = useState(false);
+  const [progress, setProgress] = useState('0');
+  const [currentTime, setCurrentTime] = useState(getRemindedTimeFilm(runTime * 60));
+  const onClickHandler = () => {
+    setIsPlayFilm(!isPlayFilm);
+  };
+  const onClickExitHandler = () => {
+    navigate(`/films/${id}`);
+  };
+  const handleFullscreen = useCallback(() => {
+    if (document.fullscreenElement !== null) {
+      // The document is in fullscreen mode
+      document.exitFullscreen();
+      setFullscreenData('false');
+    } else {
+      // The document is not in fullscreen mode
+      videoContainer.current.requestFullscreen();
+      setFullscreenData('true');
+    }
+  },[]);
+  const setFullscreenData = (isInFullScreen: string) => {
+    videoContainer.current.setAttribute('data-fullscreen', isInFullScreen.toString());
+  };
+  useEffect(()=>{
+    if (isPlayFilm) {
+      video.current.play();
+    } else {
+      video.current.pause();
+    }
+  },[isPlayFilm]);
+  useEffect(()=>{
+    video.current.addEventListener('timeupdate', () => {
+      setProgress(getCurrentProgress(video.current.currentTime, video.current.duration));
+      const remainedTime = Number(video.current.duration) - Number(video.current.currentTime);
+      setCurrentTime(getRemindedTimeFilm(remainedTime));
+    });
+    progressElem.current.addEventListener('click', (e) => {
+      const rect = progressElem.current.getBoundingClientRect();
+      const pos = (e.pageX - rect.left) / progressElem.current.offsetWidth;
+      video.current.currentTime = pos * video.current.duration;
+    });
+  }, []);
 
-      <button type="button" className="player__exit">Exit</button>
+  return(
+    <div ref={videoContainer} className="player">
+      <video ref={video} src={videoLink} className="player__video" poster={backgroundImage} autoPlay></video>
+
+      <button type="button" className="player__exit" onClick={onClickExitHandler}>Exit</button>
 
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
-            <progress className="player__progress" value="30" max="100"></progress>
-            <div className="player__toggler" style={{left: '30%'}}>Toggler</div>
+            <progress ref={progressElem} className="player__progress" value={`${progress}`} max="100"></progress>
+            <div className="player__toggler" style={{left: `${progress}%`}}>Toggler</div>
           </div>
-          <div className="player__time-value">1:30:29</div>
+          <div className="player__time-value">{`-${currentTime}`}</div>
         </div>
 
         <div className="player__controls-row">
-          <button type="button" className="player__play">
-            <svg viewBox="0 0 19 19" width="19" height="19">
-              <use xlinkHref="#play-s"></use>
-            </svg>
-            <span>Play</span>
-          </button>
-          <div className="player__name">Transpotting</div>
+          {!isPlayFilm ? <PlayerButtonPlay onClickHandler={onClickHandler}/> : <PlayerButtonPause onClickHandler={onClickHandler}/>}
+          <div className="player__name">{name}</div>
 
-          <button type="button" className="player__full-screen">
+          <button type="button" className="player__full-screen" onClick={handleFullscreen}>
             <svg viewBox="0 0 27 27" width="27" height="27">
               <use xlinkHref="#full-screen"></use>
             </svg>

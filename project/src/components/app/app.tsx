@@ -19,7 +19,10 @@ import { getAuthorizationStatus } from '../../store/user-process/selectors';
 function App(): JSX.Element {
   const {films, isDataLoading, isDataPromoFilmLoading } = useAppSelector(getFilmsData);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  if (isCheckedAuth(authorizationStatus) || isDataLoading || films.length === 0 || isDataPromoFilmLoading) {
+  if (isCheckedAuth(authorizationStatus)
+    || isDataLoading
+    || films.length === 0
+    || isDataPromoFilmLoading) {
     return <Loader />;
   }
   return (

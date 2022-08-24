@@ -1,11 +1,6 @@
 import React from 'react';
+import { getDurationFilm } from '../../main';
 import { MovieTabsProps } from '../../types/types';
-
-const getDurationFilm = (runTime: number) => {
-  const hours = Math.floor(runTime / 60);
-  const minutes = runTime - hours * 60;
-  return `${hours}h ${minutes}m`;
-};
 
 function MovieDetails ({currentFilm}:MovieTabsProps): JSX.Element{
   const {director, starring, genre, released, runTime} = currentFilm;

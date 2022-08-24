@@ -67,6 +67,8 @@ type AnswerSendCommentError = {
   error: string
 }
 
-type AnswerSendComments = Comments | AnswerSendCommentError
+type AnswerSendComments = Comments | AnswerSendCommentError;
 
-export type {FilmData, FilmsObjectProps, PrivateRouteProps, Films, FilmDataProps, AddReviewObj, MovieTabsProps, CommentData, Comments, CommentAdd, AnswerSendComments};
+type AvatarUrl = string;
+
+export type {FilmData, FilmsObjectProps, PrivateRouteProps, Films, FilmDataProps, AddReviewObj, MovieTabsProps, CommentData, Comments, CommentAdd, AnswerSendComments, AvatarUrl};
