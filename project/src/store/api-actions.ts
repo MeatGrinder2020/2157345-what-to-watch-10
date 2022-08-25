@@ -21,14 +21,15 @@ export const fetchFilmsDataAction = createAsyncThunk<Films, undefined, {
     },
   );
 
-export const checkAuthAction = createAsyncThunk<void, undefined, {
+export const checkAuthAction = createAsyncThunk<AvatarUrl, undefined, {
     dispatch: AppDispatch,
     state: State,
     extra: AxiosInstance
   }>(
     'user/checkAuth',
     async (_arg, {dispatch, extra: api}) => {
-      await api.get(APIRoute.Login);
+      const {data:{avatarUrl}} = await api.get(APIRoute.Login);
+      return avatarUrl;
     },
   );
 

@@ -26,6 +26,7 @@ export type FilmsData = {
 export type CommentsData = {
     currentFilmComments: Comments,
     isDataCommentsLoading: boolean,
+    isAddCommentsError: boolean
 }
 
 export type FavoriteFilms = {

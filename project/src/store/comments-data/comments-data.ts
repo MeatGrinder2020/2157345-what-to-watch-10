@@ -6,6 +6,7 @@ import { addCommentFilm, fetchCommentsFilm, } from '../api-actions';
 const initialState: CommentsData = {
   currentFilmComments: [],
   isDataCommentsLoading: false,
+  isAddCommentsError: false,
 };
 
 export const commentsData = createSlice({
@@ -21,8 +22,16 @@ export const commentsData = createSlice({
         state.currentFilmComments = action.payload;
         state.isDataCommentsLoading = false;
       })
+      .addCase(addCommentFilm.pending, (state)=>{
+        state.isDataCommentsLoading = true;
+        state.isAddCommentsError = false;
+      })
       .addCase(addCommentFilm.fulfilled, (state)=>{
         state.isDataCommentsLoading = false;
+        state.isAddCommentsError = false;
+      })
+      .addCase(addCommentFilm.rejected, (state)=>{
+        state.isAddCommentsError = true;
       });
   }
 
