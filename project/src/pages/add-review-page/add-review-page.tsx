@@ -1,15 +1,21 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React,{useEffect} from 'react';
+import { Link, useParams } from 'react-router-dom';
 import AddReviewForm from '../../components/add-review-form/add-review-form';
 import Avatar from '../../components/avatar/avatar';
 import Logo from '../../components/logo/logo';
 import { AppPagesRoute } from '../../const';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchFilmData } from '../../store/api-actions';
 import { getFilmsData } from '../../store/films-data/selectors';
 
 function AddReviewPage (): JSX.Element {
   const {currentFilm} = useAppSelector(getFilmsData);
-  const {name, backgroundImage, posterImage, id} = currentFilm;
+  const {name, backgroundImage, posterImage} = currentFilm;
+  const {id} = useParams();
+  const dispatch = useAppDispatch();
+  useEffect(()=>{
+    dispatch(fetchFilmData(Number(id)));
+  },[id, dispatch]);
   return(
     <section className="film-card film-card--full">
       <div className="film-card__header">

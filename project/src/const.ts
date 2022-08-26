@@ -61,5 +61,9 @@ export enum NameSpace {
     FavoriteFilms = 'FAVORITE_FILMS'
 }
 
+export const MAX_SYMBOLS_COMMENT = 400;
+
+export const MIN_SYMBOLS_COMMENT = 50;
+
 export const GUEST_AVATAR_URL = 'img/guest.jpg';
 

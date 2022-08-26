@@ -9,6 +9,7 @@ type GenresListProps = {
 function GenresList({genresFilms}: GenresListProps):JSX.Element {
   const [activeGenre, setActiveGenre] = useState(genresFilms[0]);
   const dispatch = useAppDispatch();
+  const genresForShow = genresFilms.slice(0, 9);
   const onClickHandler = (e:SyntheticEvent, genre: string) => {
     e.preventDefault();
     setActiveGenre(genre);
@@ -19,7 +20,7 @@ function GenresList({genresFilms}: GenresListProps):JSX.Element {
 
   return (
     <ul className="catalog__genres-list">
-      {genresFilms.map((genre)=>(
+      {genresForShow.map((genre)=>(
         <li key={genre} className={genre !== activeGenre ? 'catalog__genres-item' : 'catalog__genres-item catalog__genres-item--active'}>
           <a href="/" className="catalog__genres-link" onClick={(e)=>onClickHandler(e, genre)}>{genre}</a>
         </li>

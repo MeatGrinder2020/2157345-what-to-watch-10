@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { AppPagesRoute } from '../../const';
+import { AppPagesRoute, AuthStatus } from '../../const';
 import AddReviewPage from '../../pages/add-review-page/add-review-page';
 import MainPage from '../../pages/main-page/main-page';
 import MoviePage from '../../pages/movie-page/movie-page';
@@ -8,17 +8,25 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PlayerPage from '../../pages/player-page/player-page';
 import SingInPage from '../../pages/sign-in-page/sign-in-page';
 import PrivateRoute from '../private-route/private-route';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import Loader from '../loader/loader';
 import { isCheckedAuth } from '../../main';
 import browserHistory from '../../browser-history';
 import HistoryRouter from '../history-router/history-router';
 import { getFilmsData } from '../../store/films-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { useEffect } from 'react';
+import { fetchFavoriteFilms } from '../../store/api-actions';
 
 function App(): JSX.Element {
   const {films, isDataLoading, isDataPromoFilmLoading } = useAppSelector(getFilmsData);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const dispatch = useAppDispatch();
+  useEffect(()=>{
+    if (authorizationStatus === AuthStatus.Auth) {
+      dispatch(fetchFavoriteFilms());
+    }
+  }, [authorizationStatus, dispatch]);
   if (isCheckedAuth(authorizationStatus)
     || isDataLoading
     || films.length === 0
