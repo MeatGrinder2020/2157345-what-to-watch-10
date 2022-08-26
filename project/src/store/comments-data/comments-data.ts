@@ -34,5 +34,4 @@ export const commentsData = createSlice({
         state.isAddCommentsError = true;
       });
   }
-
 });
