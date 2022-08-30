@@ -8,11 +8,11 @@ type ButtonPlayProps = {
 function ButtonPlay({isPromo = false}:ButtonPlayProps):JSX.Element {
   const {promoFilm, currentFilm} = useAppSelector(getFilmsData);
   const navigate = useNavigate();
-  const onClickPlayHandler = () => {
+  const handleOnClickPlay = () => {
     navigate(`/player/${isPromo ? promoFilm.id : currentFilm.id}`);
   };
   return (
-    <button className="btn btn--play film-card__button" type="button" onClick={onClickPlayHandler}>
+    <button className="btn btn--play film-card__button" type="button" onClick={handleOnClickPlay}>
       <svg viewBox="0 0 19 19" width="19" height="19">
         <use xlinkHref="#play-s"></use>
       </svg>

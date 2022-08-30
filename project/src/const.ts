@@ -67,3 +67,11 @@ export const MIN_SYMBOLS_COMMENT = 50;
 
 export const GUEST_AVATAR_URL = 'img/guest.jpg';
 
+export const RATING = {
+  bad: {min: 0, max: 3},
+  normal: {min: 3, max: 5},
+  good: {min: 5, max: 8},
+  veryGood: {min: 8, max: 10},
+  awesome: {min: 10}
+};
+

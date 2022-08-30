@@ -13,14 +13,14 @@ function CardFilm ({filmData, setIdActiveFilm}:CardFilmProps): JSX.Element {
   const {id, name, previewImage} = filmData;
   const [isPlayedPreview, setIsPlayedPreview] = useState(false);
   const [startPlay, setStartPlay] = useState(false);
-  const onMouseOverHandler = () => {
+  const handleOnMouseOver = () => {
     setIdActiveFilm(id);
     setStartPlay(true);
   };
-  const onMouseOutHandler = () => {
+  const handleOnMouseOut = () => {
     setStartPlay(false);
   };
-  const onClickHandler = () => {
+  const handleOnClick = () => {
     navigate(`/films/${id}`);
   };
 
@@ -39,9 +39,9 @@ function CardFilm ({filmData, setIdActiveFilm}:CardFilmProps): JSX.Element {
   },[startPlay]);
   return (
     <article className="small-film-card catalog__films-card"
-      onMouseOver={onMouseOverHandler}
-      onClick={onClickHandler}
-      onMouseOut={onMouseOutHandler}
+      onMouseOver={handleOnMouseOver}
+      onClick={handleOnClick}
+      onMouseOut={handleOnMouseOut}
     >
       <div className="small-film-card__image">
         {isPlayedPreview ? <VideoPlayer filmData={filmData}/> : <img src={previewImage} alt={name} width="280" height="175" />}

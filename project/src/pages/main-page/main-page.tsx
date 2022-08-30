@@ -56,7 +56,7 @@ function MainPage(): JSX.Element {
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-          <GenresList genresFilms={genresFilms}></GenresList>
+          <GenresList genresFilms={genresFilms} setIncForShow={setIncForShow}></GenresList>
           <ListFilms films={filmsForShow} />
           {(incForShow <= filmsForShow.length) && <ShowMore incForShow={incForShow} showMoreFilms={setIncForShow}/>}
         </section>

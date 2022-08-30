@@ -5,12 +5,12 @@ type ShowMoreProps = {
     showMoreFilms: (inc: number)=>void
 }
 function ShowMore({incForShow, showMoreFilms}:ShowMoreProps):JSX.Element {
-  const onClickHandler = () => {
+  const handleOnClick = () => {
     showMoreFilms(incForShow + HOW_MATCH_SHOW_FILMS);
   };
   return(
     <div className="catalog__more">
-      <button className="catalog__button" type="button" onClick={onClickHandler}>Show more</button>
+      <button className="catalog__button" type="button" onClick={handleOnClick}>Show more</button>
     </div>
   );
 }

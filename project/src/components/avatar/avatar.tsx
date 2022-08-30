@@ -9,7 +9,7 @@ function Avatar():JSX.Element {
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const avatarUrl = useAppSelector(getAvatarUrl);
-  const logoutHandler = () => {
+  const handleLogout = () => {
     dispatch(logoutAction());
   };
   return(
@@ -21,7 +21,7 @@ function Avatar():JSX.Element {
       </li>
       <li className="user-block__item">
         {authorizationStatus === AuthStatus.Auth ?
-          <Link className="user-block__link" to="" onClick={logoutHandler}>Sign out</Link>
+          <Link className="user-block__link" to="" onClick={handleLogout}>Sign out</Link>
           : <Link className="user-block__link" to={AppPagesRoute.SignIn}>Sign in</Link>}
       </li>
     </ul>

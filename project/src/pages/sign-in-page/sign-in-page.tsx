@@ -18,10 +18,8 @@ const checkIsCorrectLogin = (login: Email):boolean => {
 };
 
 const checkIsCorrectPassword = (password: Password):boolean => {
-  if (password && password.length > 0) {
-    return true;
-  }
-  return false;
+  const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{2,}$/;
+  return re.test(password);
 };
 
 const createErrorMessages = ({isCorrectLogin, isCorrectPassword}: ErrorMessages) => {
@@ -29,7 +27,7 @@ const createErrorMessages = ({isCorrectLogin, isCorrectPassword}: ErrorMessages)
   if (!isCorrectLogin && !isCorrectPassword) {
     arrayMessagesError.push('We can’t recognize this email and password combination. Please try again.');
   } else if (!isCorrectPassword) {
-    arrayMessagesError.push('Please enter a valid password. Password must be minimum one symbol');
+    arrayMessagesError.push('Please enter a valid password. Password must be minimum one symbol and one number');
   } else if (!isCorrectLogin) {
     arrayMessagesError.push('Please enter a valid email address');
   }

@@ -14,19 +14,16 @@ function PlayerPage(): JSX.Element {
   const {id} = useParams();
   const [currentFilmPlaying] = films.filter((film) => film.id.toString() === id);
   const {videoLink, name, backgroundImage, runTime} = currentFilmPlaying;
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const video = useRef<HTMLVideoElement>(null!);
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const progressElem = useRef<HTMLProgressElement>(null!);
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const videoContainer = useRef<HTMLDivElement>(null!);
+  const video = useRef<HTMLVideoElement>(null);
+  const progressElem = useRef<HTMLProgressElement>(null);
+  const videoContainer = useRef<HTMLDivElement>(null);
   const [isPlayFilm, setIsPlayFilm] = useState(false);
   const [progress, setProgress] = useState('0');
   const [currentTime, setCurrentTime] = useState(getRemindedTimeFilm(runTime * 60));
-  const onClickHandler = () => {
+  const handleOnClick = () => {
     setIsPlayFilm(!isPlayFilm);
   };
-  const onClickExitHandler = () => {
+  const handleOnClickExit = () => {
     navigate(`/films/${id}`);
   };
   const handleFullscreen = useCallback(() => {
@@ -36,38 +33,46 @@ function PlayerPage(): JSX.Element {
       setFullscreenData('false');
     } else {
       // The document is not in fullscreen mode
-      videoContainer.current.requestFullscreen();
+      if (videoContainer.current) { videoContainer.current.requestFullscreen(); }
       setFullscreenData('true');
     }
   },[]);
   const setFullscreenData = (isInFullScreen: string) => {
-    videoContainer.current.setAttribute('data-fullscreen', isInFullScreen.toString());
+    if (videoContainer.current) {videoContainer.current.setAttribute('data-fullscreen', isInFullScreen.toString());}
   };
   useEffect(()=>{
     if (isPlayFilm) {
-      video.current.play();
+      if (video.current) { video.current.play(); }
     } else {
-      video.current.pause();
+      if (video.current) { video.current.pause(); }
     }
   },[isPlayFilm]);
   useEffect(()=>{
-    video.current.addEventListener('timeupdate', () => {
-      setProgress(getCurrentProgress(video.current.currentTime, video.current.duration));
-      const remainedTime = Number(video.current.duration) - Number(video.current.currentTime);
-      setCurrentTime(getRemindedTimeFilm(remainedTime));
-    });
-    progressElem.current.addEventListener('click', (e) => {
-      const rect = progressElem.current.getBoundingClientRect();
-      const pos = (e.pageX - rect.left) / progressElem.current.offsetWidth;
-      video.current.currentTime = pos * video.current.duration;
-    });
+    if (video.current) {
+      video.current.addEventListener('timeupdate', () => {
+        if (video.current) {
+          setProgress(getCurrentProgress(video.current.currentTime, video.current.duration));
+          const remainedTime = Number(video.current.duration) - Number(video.current.currentTime);
+          setCurrentTime(getRemindedTimeFilm(remainedTime));
+        }
+      });
+    }
+    if (progressElem.current) {
+      progressElem.current.addEventListener('click', (e) => {
+        if (progressElem.current) {
+          const rect = progressElem.current.getBoundingClientRect();
+          const pos = (e.pageX - rect.left) / progressElem.current.offsetWidth;
+          if (video.current) { video.current.currentTime = pos * video.current.duration; }
+        }
+      });
+    }
   }, []);
 
   return(
     <div ref={videoContainer} className="player">
       <video ref={video} src={videoLink} className="player__video" poster={backgroundImage} autoPlay></video>
 
-      <button type="button" className="player__exit" onClick={onClickExitHandler}>Exit</button>
+      <button type="button" className="player__exit" onClick={handleOnClickExit}>Exit</button>
 
       <div className="player__controls">
         <div className="player__controls-row">
@@ -79,7 +84,7 @@ function PlayerPage(): JSX.Element {
         </div>
 
         <div className="player__controls-row">
-          {!isPlayFilm ? <PlayerButtonPlay onClickHandler={onClickHandler}/> : <PlayerButtonPause onClickHandler={onClickHandler}/>}
+          {!isPlayFilm ? <PlayerButtonPlay handleOnClick={handleOnClick}/> : <PlayerButtonPause handleOnClick={handleOnClick}/>}
           <div className="player__name">{name}</div>
 
           <button type="button" className="player__full-screen" onClick={handleFullscreen}>

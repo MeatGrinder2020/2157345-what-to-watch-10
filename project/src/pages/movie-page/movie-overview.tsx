@@ -1,20 +1,22 @@
 import React from 'react';
+import { RATING } from '../../const';
 import { MovieTabsProps } from '../../types/types';
 
 const getRatingLevel = (rating: number) => {
-  if (rating >= 0 && rating < 3){
+  const {bad, normal, good, veryGood, awesome} = RATING;
+  if (rating >= bad.min && rating < bad.max){
     return 'Bad';
   }
-  if (rating >= 3 && rating < 5){
+  if (rating >= normal.min && rating < normal.max){
     return 'Normal';
   }
-  if (rating >= 5 && rating < 8){
+  if (rating >= good.min && rating < good.max){
     return 'Good';
   }
-  if (rating >= 8 && rating < 10){
+  if (rating >= veryGood.min && rating < veryGood.max){
     return 'Very good';
   }
-  if (rating >= 10){
+  if (rating >= awesome.min){
     return 'Awesome';
   }
 };
