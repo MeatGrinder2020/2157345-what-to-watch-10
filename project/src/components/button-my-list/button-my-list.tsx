@@ -22,7 +22,7 @@ function ButtonMyList({isPromo = false}:ButtonMyListProps):JSX.Element {
   const isFilmInMyList = favoriteFilmsList.filter((favFilm) => favFilm.id === film.id)[0];
   const dispatch = useAppDispatch();
   const [statusFilm, setStatusFilm] = useState(isFilmInMyList ? 1 : 0);
-  const onClickMyListHandler = () => {
+  const handleOnClickMyList = () => {
     if (authorizationStatus === AuthStatus.Auth) {
       dispatch(changeMyListFilm({
         id: isPromo ? promoFilm.id : currentFilm.id,
@@ -39,7 +39,7 @@ function ButtonMyList({isPromo = false}:ButtonMyListProps):JSX.Element {
     }
   }, [isFilmInMyList]);
   return(
-    <button className="btn btn--list film-card__button" type="button" onClick={onClickMyListHandler}>
+    <button className="btn btn--list film-card__button" type="button" onClick={handleOnClickMyList}>
       {statusFilm ? <CheckMark /> : <svg viewBox="0 0 19 20" width="19" height="20">
         <use xlinkHref="#add"></use></svg>}
       <span>My list</span>

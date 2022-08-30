@@ -1,9 +1,9 @@
 type PlayerButtonPlayProp = {
-    onClickHandler: () => void
+    handleOnClick: () => void
 }
-function PlayerButtonPlay({onClickHandler}:PlayerButtonPlayProp):JSX.Element{
+function PlayerButtonPlay({handleOnClick}:PlayerButtonPlayProp):JSX.Element{
   return(
-    <button type="button" className="player__play" onClick={onClickHandler}>
+    <button type="button" className="player__play" onClick={handleOnClick}>
       <svg viewBox="0 0 19 19" width="19" height="19">
         <use xlinkHref="#play-s"></use>
       </svg>

@@ -1,9 +1,9 @@
 type PlayerButtonPauseProp = {
-    onClickHandler: () => void
+    handleOnClick: () => void
 }
-function PlayerButtonPause({onClickHandler}:PlayerButtonPauseProp):JSX.Element {
+function PlayerButtonPause({handleOnClick}:PlayerButtonPauseProp):JSX.Element {
   return(
-    <button type="button" className="player__play" onClick={onClickHandler}>
+    <button type="button" className="player__play" onClick={handleOnClick}>
       <svg viewBox="0 0 14 21" width="14" height="21">
         <use xlinkHref="#pause"></use>
       </svg>

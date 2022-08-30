@@ -20,13 +20,13 @@ function AddReviewForm():JSX.Element {
   const {comment, rating} = formData;
   const [isButtonPostDisabled, setIsButtonPostDisabled] = useState(true);
   const [isTextAreaDisabled, setIsTextAreaDisabled] = useState(false);
-  const formChangeHandler = (event: SyntheticEvent): void => {
+  const handleFormChange = (event: SyntheticEvent): void => {
     // Код для обновления состояния объекта формы
     const {name, value} = event.target as HTMLTextAreaElement;
     setFormData({...formData, [name]: value});
   };
 
-  const onSubmitHandler = (event: SyntheticEvent):void => {
+  const handleOnSubmit = (event: SyntheticEvent):void => {
     event.preventDefault();
     const rewiew = {
       id: currentFilm.id,
@@ -53,10 +53,10 @@ function AddReviewForm():JSX.Element {
   },[isAddCommentsError]);
   return(
     <div className="add-review">
-      <form action="#" className="add-review__form" onSubmit={onSubmitHandler}>
-        <FilmRating changeFormRating={formChangeHandler} formData={formData}></FilmRating>
+      <form action="#" className="add-review__form" onSubmit={handleOnSubmit}>
+        <FilmRating changeFormRating={handleFormChange} formData={formData}></FilmRating>
         <div className="add-review__text">
-          <textarea className="add-review__textarea" name="comment" id="review-text" placeholder="Review text" onChange={formChangeHandler} disabled={isTextAreaDisabled}></textarea>
+          <textarea className="add-review__textarea" name="comment" id="review-text" placeholder="Review text" onChange={handleFormChange} disabled={isTextAreaDisabled}></textarea>
           <div className="add-review__submit">
             <button className="add-review__btn" type="submit" disabled={isButtonPostDisabled}>Post</button>
           </div>
